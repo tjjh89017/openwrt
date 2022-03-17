@@ -7,12 +7,12 @@ include $(TOPDIR)/rules.mk
 BOARD:=armvirt
 BOARDNAME:=QEMU ARM Virtual Machine
 FEATURES:=fpu pci rtc usb
-FEATURES+=cpiogz ext4 ramdisk squashfs targz
+FEATURES+=cpiogz ext4 ramdisk squashfs targz boot-part rootfs-part
 
 KERNEL_PATCHVER:=5.10
 
 include $(INCLUDE_DIR)/target.mk
 
-DEFAULT_PACKAGES += mkf2fs e2fsprogs
+DEFAULT_PACKAGES += mkf2fs e2fsprogs blkid
 
 $(eval $(call BuildTarget))
