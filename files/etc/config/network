@@ -40,11 +40,13 @@ config interface 'wwan_5g'
 	option proto 'dhcp'
 	option ifname 'usb0'
 	option metric '10'
+	option auto '0'
 
 config interface 'wwan_5g_v6'
 	option proto 'dhcpv6'
 	option ifname 'usb0'
 	option metric '11'
+	option auto '0'
 
 config interface 'wwan_lte'
 	option proto 'dhcp'

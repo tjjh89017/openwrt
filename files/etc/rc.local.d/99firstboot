@@ -1,10 +1,26 @@
 #!/bin/sh
 
-MACADDR=$(ip link | grep wlan0: -A 1 | tail -n 1 | awk '{gsub(/:/,""); print tolower($2)}')
+WIFIDEVICE="platform/fe2c0000.dwmmc/mmc_host/mmc2/mmc2:0001/mmc2:0001:1"
+
+if [ ! -d "/sys/devices/${WIFIDEVICE}" ]; then
+    exit 0
+fi
+
+MACADDR=$(cat "/sys/devices/${WIFIDEVICE}/net/"*/address | tail -n 1 | awk '{gsub(/:/,""); print tolower($0)}')
 WIFISSID="photonicat-${MACADDR:4:8}"
 
+rm -f /etc/config/wireless 2>/dev/null || true
+
+echo "config wifi-device 'radio0'" >/etc/config/wireless
+echo "" >>/etc/config/wireless
+echo "config wifi-iface 'default_radio0'" >>/etc/config/wireless
+
 uci set wireless.radio0.disabled=0
-uci set wireless.default_radio0.ssid=${WIFISSID}
+uci set wireless.radio0.type=mac80211
+uci set wireless.radio0.country=US
+uci set wireless.radio0.path="${WIFIDEVICE}"
+uci set wireless.default_radio0.device=radio0
+uci set wireless.default_radio0.ssid="${WIFISSID}"
 uci set wireless.radio0.channel=10
 uci set wireless.radio0.band=2g
 uci set wireless.radio0.htmode=HT20
@@ -12,9 +28,10 @@ uci set wireless.default_radio0.network=lan
 uci set wireless.default_radio0.mode=ap
 uci set wireless.default_radio0.encryption=psk2
 uci set wireless.default_radio0.key=photonicat
-uci set wireless.default_raido0.wps_pushbutton=0
+uci set wireless.default_radio0.wps_pushbutton=0
 
 uci commit
+wifi reload
 wifi
 
 sleep 3
