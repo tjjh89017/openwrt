@@ -5,7 +5,7 @@ PKG_VERSION:=1.0.16
 PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/photonicat/rockchip_rk3568_pcat_manager.git
+PKG_SOURCE_URL:=https://github.com/tjjh89017/rockchip_rk3568_pcat_manager.git
 PKG_SOURCE_DATE:=2022-11-17
 PKG_SOURCE_VERSION:=6e6f6820be0c4c69a302a447e9480f5bc07b8c05
 
