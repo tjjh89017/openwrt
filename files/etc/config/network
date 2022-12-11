@@ -51,11 +51,13 @@ config interface 'wwan_lte'
 	option proto 'dhcp'
 	option metric '12'
 	option device 'wwan0'
+	option auto '0'
 
 config interface 'wwan_lte_v6'
 	option proto 'dhcpv6'
 	option metric '13'
 	option device 'wwan0'
+	option auto '0'
 
 config device
 	option name 'br-lan'
