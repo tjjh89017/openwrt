@@ -4,7 +4,7 @@ START=45
 STOP=89
 
 start() {
-	service_start /usr/bin/pcat-manager -D
+	service_start /usr/bin/pcat-manager -D --distro
 }
 
 stop() {
