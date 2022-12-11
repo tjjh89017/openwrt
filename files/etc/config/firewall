@@ -1,11 +1,10 @@
+
 config defaults
-	option syn_flood '1'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
-	option flow_offloading '0'
-	option flow_offloading_hw '0'
 	option fullcone '1'
+	option synflood_protect '1'
 
 config zone
 	option name 'lan'
@@ -20,8 +19,15 @@ config zone
 	option output 'ACCEPT'
 	option forward 'REJECT'
 	option masq '1'
+	option masq6 '1'
+	list network 'wan'
+	list network 'wan6'
+	list network 'wwan'
+	list network 'wwan_5g'
+	list network 'wwan_5g_v6'
+	list network 'wwan_lte'
+	list network 'wwan_lte_v6'
 	option mtu_fix '1'
-	option network 'wan wan6 wwan_5g wwan_lte wwan_5g_v6 wwan_lte_v6'
 
 config forwarding
 	option src 'lan'
@@ -134,14 +140,11 @@ config rule
 config include
 	option path '/etc/firewall.user'
 
-config include 'miniupnpd'
-	option type 'script'
-	option path '/usr/share/miniupnpd/firewall.include'
-	option family 'any'
-	option reload '1'
-
 config include 'mia'
 	option type 'script'
 	option path '/etc/mia.include'
 	option reload '1'
 
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
