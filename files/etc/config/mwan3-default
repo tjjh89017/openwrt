@@ -172,7 +172,7 @@ config member 'wwan_m1024_w3'
 
 config interface 'wwan'
 	option enabled '1'
-	option initial_state 'online'
+	option initial_state 'offline'
 	option family 'ipv4'
 	list track_ip '8.8.4.4'
 	list track_ip '180.76.76.76'
