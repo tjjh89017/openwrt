@@ -24,6 +24,7 @@ config interface 'wan6'
 	option proto 'dhcpv6'
 	option metric '2'
 	option device 'eth0'
+	option sourcefilter '0'
 
 config interface 'VPN'
 	option proto 'static'
