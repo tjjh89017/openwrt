@@ -35,6 +35,16 @@ uci commit
 wifi reload
 wifi
 
+uci set system.@system[0].hostname=photonicat-openwrt
+uci commit system
+
+uci set fstab.@global[0].anon_mount=1
+uci commit fstab
+
+# disable watchcat by default
+echo > /etc/config/watchcat
+/etc/init.d/watchcat restart
+
 sleep 3
 
 rm -f /etc/rc.local.d/99firstboot
