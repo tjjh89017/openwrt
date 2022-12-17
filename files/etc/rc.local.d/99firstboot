@@ -46,8 +46,8 @@ echo > /etc/config/watchcat
 /etc/init.d/watchcat restart
 
 # patch ModemManager Proto to support IPv6 static sourcefilter
-mv /lib/netifd/proto/modemmanger.sh /lib/netifd/proto/modemmanger.sh.origin
-cp /usr/share/patch/modemmanger.proto /lib/netifd/proto/modemmanger.sh
+mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
+cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
 /etc/init.d/modemmanger restart
 
 sync
