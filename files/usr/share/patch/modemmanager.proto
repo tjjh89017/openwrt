@@ -368,7 +368,7 @@ proto_modemmanager_setup() {
 
 	local address prefix gateway mtu dns1 dns2
 
-	json_get_vars device apn allowedauth username password pincode iptype metric signalrate
+	json_get_vars device apn allowedauth username password pincode iptype metric signalrate sourcefilter
 
 	# disable sourcefilter
 	[ "$sourcefilter" = "0" ] && NOSOURCEFILTER=1
