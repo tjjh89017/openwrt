@@ -21,9 +21,9 @@ uci set wireless.radio0.country=US
 uci set wireless.radio0.path="${WIFIDEVICE}"
 uci set wireless.default_radio0.device=radio0
 uci set wireless.default_radio0.ssid="${WIFISSID}"
-uci set wireless.radio0.channel=10
-uci set wireless.radio0.band=2g
-uci set wireless.radio0.htmode=HT20
+uci set wireless.radio0.channel=149
+uci set wireless.radio0.band=5g
+uci set wireless.radio0.htmode=VHT80
 uci set wireless.default_radio0.network=lan
 uci set wireless.default_radio0.mode=ap
 uci set wireless.default_radio0.encryption=psk2
@@ -48,7 +48,7 @@ echo > /etc/config/watchcat
 # patch ModemManager Proto to support IPv6 static sourcefilter
 mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
 cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
-/etc/init.d/modemmanger restart
+/etc/init.d/network restart
 
 sync
 sync
