@@ -53,9 +53,9 @@ define Build/Configure
 	$(SED) 's,$$$$(PKG_BUILD_DIR),$(PKG_BUILD_DIR),g' $(PKG_BUILD_DIR)/trust.ini
 	$(SED) 's,$$$$(VARIANT),$(BUILD_VARIANT),g' $(PKG_BUILD_DIR)/trust.ini
 
-	$(SED) 's,uart id=,uart id=2,g' $(PKG_BUILD_DIR)/tools/drbin_param.txt
-	$(SED) 's,uart baudrate=,uart baudrate=115200,g' $(PKG_BUILD_DIR)/tools/drbin_param.txt
-	$(PKG_BUILD_DIR)/tools/ddrbin_tool $(PKG_BUILD_DIR)/tools/drbin_param.txt $(PKG_BUILD_DIR)/bin/rk35/rk3568_ddr_1332MHz_v1.16.bin
+	$(SED) 's,uart id=,uart id=2,g' $(PKG_BUILD_DIR)/tools/ddrbin_param.txt
+	$(SED) 's,uart baudrate=,uart baudrate=115200,g' $(PKG_BUILD_DIR)/tools/ddrbin_param.txt
+	$(PKG_BUILD_DIR)/tools/ddrbin_tool $(PKG_BUILD_DIR)/tools/ddrbin_param.txt $(PKG_BUILD_DIR)/bin/rk35/rk3568_ddr_1332MHz_v1.16.bin
 
 	$(call Build/Configure/Default)
 endef
