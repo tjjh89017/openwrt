@@ -59,7 +59,7 @@
 +	compatible = "ariaboard,photonicat", "rockchip,rk3568";
 +
 +	chosen: chosen {
-+		stdout-path = "serial2:1500000n8";
++		stdout-path = "serial2:115200n8";
 +	};
 +
 +	vcc3v3_sd: vcc3v3_sd {
@@ -239,7 +239,7 @@
 +CONFIG_REGULATOR_RK8XX=y
 +CONFIG_PWM_ROCKCHIP=y
 +CONFIG_SPL_RAM=y
-+CONFIG_BAUDRATE=1500000
++CONFIG_BAUDRATE=115200
 +CONFIG_DEBUG_UART_SHIFT=2
 +CONFIG_SYS_NS16550_MEM32=y
 +CONFIG_SYSRESET=y
