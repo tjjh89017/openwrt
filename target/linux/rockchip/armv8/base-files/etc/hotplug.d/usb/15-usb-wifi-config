@@ -1,0 +1,12 @@
+#!/bin/sh
+
+case "$(board_name)" in
+rockchip,rk3568-photonicat)
+    exit
+    ;;
+esac
+
+if [ "${ACTION}" = "add" ]; then
+  usbmode -s && sleep 5
+  [ -n "$(cat /proc/net/wireless | grep wlan)" ] && wifi config && wifi
+fi
