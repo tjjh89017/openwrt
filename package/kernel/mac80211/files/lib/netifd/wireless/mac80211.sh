@@ -495,7 +495,7 @@ $base_cfg
 EOF
 	json_select ..
 	radio_md5sum=$(md5sum $hostapd_conf_file | cut -d" " -f1)
-	echo "radio_config_id=${radio_md5sum}" >> $hostapd_conf_file
+	#echo "radio_config_id=${radio_md5sum}" >> $hostapd_conf_file
 }
 
 mac80211_hostapd_setup_bss() {
