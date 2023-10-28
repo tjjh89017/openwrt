@@ -20,9 +20,9 @@ define KernelPackage/kvm-x86
   TITLE:=Kernel-based Virtual Machine (KVM) support
   DEPENDS:=@TARGET_x86_generic||TARGET_x86_64 +kmod-irqbypass
   KCONFIG:=\
-	  CONFIG_KVM \
-	  CONFIG_KVM_MMU_AUDIT=n \
-	  CONFIG_VIRTUALIZATION=y
+	CONFIG_KVM \
+	CONFIG_KVM_MMU_AUDIT=n \
+	CONFIG_VIRTUALIZATION=y
   FILES:= $(LINUX_DIR)/arch/$(LINUX_KARCH)/kvm/kvm.ko
   AUTOLOAD:=$(call AutoProbe,kvm.ko)
 endef
@@ -73,69 +73,46 @@ endef
 
 $(eval $(call KernelPackage,kvm-amd))
 
-
-define KernelPackage/vfio
+define KernelPackage/vfio-mdev
   SUBMENU:=Virtualization
-  TITLE:=VFIO Non-Privileged userspace driver framework
-  DEPENDS:=@TARGET_x86_64||TARGET_armsr_armv8
-  KCONFIG:= \
-	CONFIG_VFIO \
-	CONFIG_VFIO_NOIOMMU=n \
-	CONFIG_VFIO_MDEV=n
+  TITLE:=VFIO driver support to to virtualize devices
+  DEPENDS:=@TARGET_x86_64
+  KCONFIG:=	\
+	CONFIG_IOMMU_API=y \
+	CONFIG_MMU=y \
+	CONFIG_VFIO=y \
+	CONFIG_VFIO_MDEV \
+	CONFIG_VFIO_MDEV_DEVICE \
+	CONFIG_VFIO_NOIOMMU=y \
+	CONFIG_VFIO_PCI=y \
+	CONFIG_VFIO_PCI_IGD=y
   FILES:= \
-	$(LINUX_DIR)/drivers/vfio/vfio.ko \
-	$(LINUX_DIR)/drivers/vfio/vfio_virqfd.ko \
-	$(LINUX_DIR)/drivers/vfio/vfio_iommu_type1.ko
-  AUTOLOAD:=$(call AutoProbe,vfio vfio_iommu_type1 vfio_virqfd)
+	$(LINUX_DIR)/drivers/vfio/mdev/mdev.ko \
+	$(LINUX_DIR)/drivers/vfio/mdev/vfio_mdev.ko@lt5.10
+  AUTOLOAD:=$(call AutoProbe,mdev vfio_mdev)
 endef
 
-define KernelPackage/vfio/description
-  VFIO provides a framework for secure userspace device drivers.
+define KernelPackage/vfio-mdev/description
+  Provides a framework to virtualize devices.
 endef
 
-$(eval $(call KernelPackage,vfio))
+$(eval $(call KernelPackage,vfio-mdev))
 
-
-define KernelPackage/vfio-pci
+define KernelPackage/i915-gvt
   SUBMENU:=Virtualization
-  TITLE:=Generic VFIO support for any PCI device
-  DEPENDS:=@TARGET_x86_64||TARGET_armsr_armv8 @PCI_SUPPORT +kmod-vfio +kmod-irqbypass
-  KCONFIG:= \
-	CONFIG_VFIO_PCI \
-	CONFIG_VFIO_PCI_IGD=n
+  TITLE:=Enable KVM/VFIO support for Intel GVT-g
+  DEPENDS:=@TARGET_x86_64 +kmod-kvm-intel +kmod-drm-i915 +kmod-vfio-mdev
+  KCONFIG:= CONFIG_DRM_I915_GVT_KVMGT
   FILES:= \
-	$(LINUX_DIR)/drivers/vfio/pci/vfio-pci-core.ko \
-	$(LINUX_DIR)/drivers/vfio/pci/vfio-pci.ko
-  AUTOLOAD:=$(call AutoProbe,vfio-pci)
+      $(LINUX_DIR)/drivers/gpu/drm/i915/gvt/kvmgt.ko@lt5.18 \
+      $(LINUX_DIR)/drivers/gpu/drm/i915/kvmgt.ko@ge5.18
+  AUTOLOAD:=$(call AutoProbe,kvmgt)
 endef
 
-define KernelPackage/vfio-pci/description
-  Support for the generic PCI VFIO bus driver which can connect any PCI
-  device to the VFIO framework.
+define KernelPackage/i915-gvt/description
+  Enable Intel GVT-g graphics virtualization technology host support with 
+  integrated graphics. With GVT-g, it's possible to have one integrated 
+  graphics device shared by multiple VMs under KVM.
 endef
 
-$(eval $(call KernelPackage,vfio-pci))
-
-
-define KernelPackage/vhost
-  SUBMENU:=Virtualization
-  TITLE:=Host kernel accelerator for virtio (base)
-  KCONFIG:=CONFIG_VHOST
-  FILES:=$(LINUX_DIR)/drivers/vhost/vhost.ko \
-    $(LINUX_DIR)/drivers/vhost/vhost_iotlb.ko
-  AUTOLOAD:=$(call AutoProbe,vhost vhost_iotlb)
-endef
-
-$(eval $(call KernelPackage,vhost))
-
-
-define KernelPackage/vhost-net
-  SUBMENU:=Virtualization
-  TITLE:=Host kernel accelerator for virtio-net
-  DEPENDS:=+kmod-tun +kmod-vhost
-  KCONFIG:=CONFIG_VHOST_NET
-  FILES:=$(LINUX_DIR)/drivers/vhost/vhost_net.ko
-  AUTOLOAD:=$(call AutoProbe,vhost_net)
-endef
-
-$(eval $(call KernelPackage,vhost-net))
+$(eval $(call KernelPackage,i915-gvt))
