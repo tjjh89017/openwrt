@@ -8,6 +8,7 @@ rockchip_setup_interfaces()
 	local board="$1"
 
 	case "$board" in
+	rockchip,rk3568-photonicat|\
 	ariaboard,photonicat|\
 	ezpro,mrkaio-m68s|\
 	ezpro,mrkaio-m68s-plus|\
