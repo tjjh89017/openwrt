@@ -67,7 +67,6 @@ uci commit system
 # patch modemmanager for sourcefilter
 mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
 cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
-/etc/init.d/network restart
 
 uci set network.wan.metric='512'
 uci set network.wan6.sourcefilter='0'
