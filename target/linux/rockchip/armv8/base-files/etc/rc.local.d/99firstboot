@@ -65,6 +65,7 @@ uci commit system
 /etc/init.d/modemmanager start
 
 uci set network.wan.metric='512'
+uci set network.wan6.sourcefilter='0'
 
 uci set network.wwan=interface
 uci set network.wwan.proto='modemmanager'
@@ -74,7 +75,12 @@ uci set network.wwan.auth='none'
 uci set network.wwan.iptype='ipv4v6'
 uci set network.wwan.metric='1024'
 uci commit
-/etc/init.d/network reload
+/etc/init.d/network restart
+
+uci add_list firewall.@zone[1].network='wwan'
+uci set firewall.@zone[1].masq6='1'
+uci commit firewall
+/etc/init.d/firewall restart
 
 rm -f /etc/rc.local.d/99firstboot
 
