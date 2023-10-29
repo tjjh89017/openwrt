@@ -37,7 +37,7 @@ uci set wireless.radio0.country=US
 uci set wireless.radio0.path="${WIFIDEVICE}"
 uci set wireless.default_radio0.device=radio0
 uci set wireless.default_radio0.ssid="${WIFISSID}"
-uci set wireless.radio0.channel=10
+uci set wireless.radio0.channel=11
 uci set wireless.radio0.band=2g
 uci set wireless.radio0.htmode=HT20
 uci set wireless.default_radio0.network=lan
@@ -52,6 +52,9 @@ sleep 3
 wifi config
 wifi reconf
 wifi
+
+/etc/init.d/modemmanager enable
+/etc/init.d/modemmanager start
 
 rm -f /etc/rc.local.d/99firstboot
 
