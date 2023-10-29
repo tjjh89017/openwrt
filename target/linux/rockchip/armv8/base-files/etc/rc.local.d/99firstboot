@@ -71,6 +71,11 @@ sleep 3
 mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
 cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
 
+uci set network.globals.ula_prefix='fdfd::/48'
+uci del network.lan.netmask
+uci del network.lan.ipaddr
+uci add_list network.lan.ipaddr='172.16.0.1/24'
+
 uci set network.wan.metric='512'
 uci set network.wan6.sourcefilter='0'
 uci set network.wan6.delegate='0'
