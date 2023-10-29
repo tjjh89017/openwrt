@@ -53,6 +53,14 @@ wifi config
 wifi reconf
 wifi
 
+uci set luci.main.lang=zh_tw
+uci commit luci
+
+uci set system.@system[0].timezone=CST-8
+uci set system.@system[0].zonename=Asia/Taipei
+uci set system.@system[0].hostname=photonicat-openwrt
+uci commit system
+
 /etc/init.d/modemmanager enable
 /etc/init.d/modemmanager start
 
