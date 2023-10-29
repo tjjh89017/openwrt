@@ -64,6 +64,8 @@ uci commit system
 /etc/init.d/modemmanager enable
 /etc/init.d/modemmanager start
 
+sleep 3
+
 # patch modemmanager for sourcefilter
 mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
 cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
