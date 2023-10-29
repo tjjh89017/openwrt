@@ -64,6 +64,11 @@ uci commit system
 /etc/init.d/modemmanager enable
 /etc/init.d/modemmanager start
 
+# patch modemmanager for sourcefilter
+mv /lib/netifd/proto/modemmanager.sh /lib/netifd/proto/modemmanager.sh.origin
+cp /usr/share/patch/modemmanager.proto /lib/netifd/proto/modemmanager.sh
+/etc/init.d/network restart
+
 uci set network.wan.metric='512'
 uci set network.wan6.sourcefilter='0'
 
@@ -74,6 +79,7 @@ uci set network.wwan.apn='internet'
 uci set network.wwan.auth='none'
 uci set network.wwan.iptype='ipv4v6'
 uci set network.wwan.metric='1024'
+uci set network.wwan.sourcefilter='0'
 uci commit
 /etc/init.d/network restart
 
@@ -81,6 +87,10 @@ uci add_list firewall.@zone[1].network='wwan'
 uci set firewall.@zone[1].masq6='1'
 uci commit firewall
 /etc/init.d/firewall restart
+
+# disable watchcat by default
+echo > /etc/config/watchcat
+/etc/init.d/watchcat restart
 
 rm -f /etc/rc.local.d/99firstboot
 
