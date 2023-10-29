@@ -81,6 +81,7 @@ uci set network.wwan.auth='none'
 uci set network.wwan.iptype='ipv4v6'
 uci set network.wwan.metric='1024'
 uci set network.wwan.sourcefilter='0'
+uci set network.wwan.delegate='0'
 uci commit
 /etc/init.d/network restart
 
