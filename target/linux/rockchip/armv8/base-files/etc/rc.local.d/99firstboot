@@ -64,6 +64,18 @@ uci commit system
 /etc/init.d/modemmanager enable
 /etc/init.d/modemmanager start
 
+uci set network.wan.metric='512'
+
+uci set network.wwan=interface
+uci set network.wwan.proto='modemmanager'
+uci set network.wwan.device='/sys/devices/platform/fd000000.usb/xhci-hcd.1.auto/usb7/7-1'
+uci set network.wwan.apn='internet'
+uci set network.wwan.auth='none'
+uci set network.wwan.iptype='ipv4v6'
+uci set network.wwan.metric='1024'
+uci commit
+/etc/init.d/network reload
+
 rm -f /etc/rc.local.d/99firstboot
 
 sleep 3
