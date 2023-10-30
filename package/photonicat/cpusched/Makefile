@@ -24,7 +24,10 @@ define Package/cpusched/description
   CPU sched will enable/disable CPU core
 endef
 
-define Pacakge/cpusched/install
+define Package/cpusched/compile
+endef
+
+define Package/cpusched/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) \
 		./files/cpusched.sh \
