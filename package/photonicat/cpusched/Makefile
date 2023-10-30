@@ -24,7 +24,7 @@ define Package/cpusched/description
   CPU sched will enable/disable CPU core
 endef
 
-define Package/cpusched/compile
+define Build/Compile
 endef
 
 define Package/cpusched/install
