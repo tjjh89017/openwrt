@@ -20,6 +20,11 @@ ALL_CPUS=$(awk -F- '{print $2-$1+1}' "${SYSFS}/possible")
 CURRENT_CPUS=$(awk -F- '{print $2-$1+1}' "${SYSFS}/online")
 LOADAVG=$(awk '{print $1*100}' "/proc/loadavg")
 
+for file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+do
+	echo "powersave" > $file
+done
+
 while :
 do
 	sleep "$INTERVAL"
