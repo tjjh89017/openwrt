@@ -98,6 +98,20 @@ uci set firewall.@zone[1].masq6='1'
 uci commit firewall
 /etc/init.d/firewall restart
 
+# set TTL/hoplimit 64
+cat <<EOF > /etc/firewall.user
+nft add rule inet fw4 mangle_forward oifname wwan0 ip ttl set 64
+nft add rule inet fw4 mangle_forward oifname eth0 ip ttl set 64
+nft add rule inet fw4 mangle_forward oifname wwan0 ip6 hoplimit set 64
+nft add rule inet fw4 mangle_forward oifname eth0 ip6 hoplimit set 64
+EOF
+
+uci set firewall.@include[0]=include
+uci set firewall.@include[0].path='/etc/firewall.user'
+uci set firewall.@include[0].fw4_compatible='1'
+uci commit firewall
+/etc/init.d/firewall restart
+
 # disable watchcat by default
 echo > /etc/config/watchcat
 /etc/init.d/watchcat restart
