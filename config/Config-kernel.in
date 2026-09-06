@@ -1331,7 +1331,7 @@ endif
 
 config KERNEL_NET_L3_MASTER_DEV
 	bool "L3 Master device support"
-	default y if !SMALL_FLASH
+	default y
 	help
 	  This module provides glue between core networking code and device
 	  drivers to support L3 master devices like VRF.
